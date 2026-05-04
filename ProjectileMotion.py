@@ -7,7 +7,6 @@
 # upon landing, illustrating the effects of gravitational and wind resistance forces.
 
 from vpython import *
-Web VPython 3.2
 
 # Setup the canvas and environment parameters
 scene = canvas(center=vector(1, 1, 0), background=color.black)
@@ -53,6 +52,7 @@ run_button = button(text="Run", bind=Run)
 button(text="Reset", bind=Reset)
 
 # Parameters for initial setup
+wind_resistance = 0.01
 vConstant = 6.1
 x0, y0 = -1.4, 0.0001
 theta = 50 * pi / 180
