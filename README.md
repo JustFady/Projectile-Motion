@@ -2,6 +2,11 @@
 
 A 3D projectile motion simulation built with VPython. Launch a ball under different planetary gravities (Earth, Mars, Venus, Jupiter) and observe the effects of wind resistance in real time.
 
+## GlowScript
+
+You can also view and run the simulation directly in your browser via GlowScript:
+[ProjectileMotion on GlowScript](https://www.glowscript.org/#/user/byte4589/folder/MyPrograms/program/ProjectileMotion/edit)
+
 ## Features
 
 - **Multiple Environments** — Switch between Earth, Mars, Venus, and Jupiter gravity.
