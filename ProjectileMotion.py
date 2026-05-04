@@ -34,8 +34,12 @@ def Run(b):
 
 # Reset simulation to its initial state
 def Reset():
-    global t, running, dt
+    global t, running, dt, vConstant, theta, wind_resistance
     t = 0
+    # Read current slider values
+    vConstant = velocity_slider.value
+    theta = angle_slider.value * pi / 180
+    wind_resistance = wind_slider.value
     ball.pos = vec(x0, y0, 0)
     ball.v = vConstant * vec(cos(theta), sin(theta), 0)
     ball.mo = ball.mass * ball.v
@@ -76,6 +80,27 @@ scene.append_to_caption('\n\n--- Simulation Stats ---\n')
 hud_velocity = wtext(text='Velocity: 0 m/s\n')
 hud_distance = wtext(text='Distance from target: 0 m\n')
 hud_impact = wtext(text='Impact Force: -- N\n')
+
+# --- Interactive Sliders ---
+# Slider callbacks update the label text to show the current value
+def set_velocity(s):
+    velocity_label.text = f'  Launch Velocity: {s.value:.1f} m/s\n'
+
+def set_angle(s):
+    angle_label.text = f'  Launch Angle: {s.value:.0f}°\n'
+
+def set_wind(s):
+    wind_label.text = f'  Wind Resistance: {s.value:.3f}\n'
+
+scene.append_to_caption('\n--- Launch Parameters (adjust then hit Reset) ---\n')
+velocity_slider = slider(min=1, max=15, value=vConstant, step=0.1, bind=set_velocity)
+velocity_label = wtext(text=f'  Launch Velocity: {vConstant:.1f} m/s\n')
+
+angle_slider = slider(min=5, max=85, value=50, step=1, bind=set_angle)
+angle_label = wtext(text=f'  Launch Angle: 50°\n')
+
+wind_slider = slider(min=0, max=0.1, value=wind_resistance, step=0.001, bind=set_wind)
+wind_label = wtext(text=f'  Wind Resistance: {wind_resistance:.3f}\n')
 
 # Main simulation loop
 while True:
