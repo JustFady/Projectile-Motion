@@ -45,6 +45,8 @@ def Reset():
     b_speed.delete()  # Clear the graph data
     running = False
     run_button.text = "Run"
+    if 'hud_impact' in globals():
+        hud_impact.text = 'Impact Force: -- N\n'
     print("Simulation reset.")
 
 # Buttons for control
@@ -69,6 +71,12 @@ ball.mo = ball.mass * ball.v
 speed_graph = graph(title='Motion through time', xtitle='Time (s)', ytitle='Velocity (m/s)')
 b_speed = gcurve(graph=speed_graph, color=color.red)
 
+# HUD for live stats
+scene.append_to_caption('\n\n--- Simulation Stats ---\n')
+hud_velocity = wtext(text='Velocity: 0 m/s\n')
+hud_distance = wtext(text='Distance from target: 0 m\n')
+hud_impact = wtext(text='Impact Force: -- N\n')
+
 # Main simulation loop
 while True:
     rate(500)
@@ -91,13 +99,12 @@ while True:
 
         # Display current state information
         d = hole.pos.x - ball.pos.x
-        print(f"Position of the ball: {ball.pos}")
-        print(f"Velocity of the ball: {ball.v}")
-        print(f"Distance from target: {d} meters")
+        hud_velocity.text = f"Velocity: {mag(ball.v):.2f} m/s\n"
+        hud_distance.text = f"Distance from target: {d:.2f} m\n"
 
     # Check if the ball has hit the ground and stop the simulation
     if ball.pos.y < 0 and running:
         impact_force = mag(Fnet)
-        print(f"Impact force on {current_env}: {impact_force:.2f} Newtons")
+        hud_impact.text = f"Impact force on {current_env}: {impact_force:.2f} Newtons\n"
         running = False
         run_button.text = "Run"
